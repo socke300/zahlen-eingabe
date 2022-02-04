@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Zahleneingabe</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Zahleneingabe</title>
+    <style>
+
+        body {
+            background: #CFC;
+        }
+
+        th {
+            padding: 15px 50px;
+            text-align: right;
+        }
+
+        td {
+            padding: 5px 30px;
+            text-align: center;
+        }
+
+        td:hover {
+            background: rgb(226, 7, 7);
+        }
+
+        table {
+            margin-left: 37%;
+            line-height: 2;
+        }
+
+        h1 {
+            margin-left: 40%;
+        }
+
+    </style>
+</head>
+
+<body>
+<h1>Zahleneingabe</h1>
+<form method="get">
+    <table class="table-bordered table-dark">
+        <tr>
+            <th colspan=4 id="result">0</th>
+        </tr>
+        <tr>
+            <td onclick="sendValueUndo()">undo</td>
+            <td onclick="sendValueClear()">clear</td>
+            <td>C</td>
+            <td>÷</td>
+        </tr>
+        <tr>
+            <td onclick="sendValue('7')">7</td>
+            <td onclick="sendValue('8')">8</td>
+            <td onclick="sendValue('9')">9</td>
+            <td>*</td>
+        </tr>
+        <tr>
+            <td onclick="sendValue('4')">4</td>
+            <td onclick="sendValue('5')">5</td>
+            <td onclick="sendValue('6')">6</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td onclick="sendValue('1')">1</td>
+            <td onclick="sendValue('2')">2</td>
+            <td onclick="sendValue('3')">3</td>
+            <td>+</td>
+        </tr>
+        <tr>
+            <td>+/-</td>
+            <td onclick="sendValue('0')">0</td>
+            <td onclick="sendValue('.')">,</td>
+            <td>=</td>
+        </tr>
+    </table>
+</form>
+</body>
+<script type="text/javascript">
+    const http = new XMLHttpRequest();
+
+    function sendValue(x) {
+        http.open('GET', 'sendValue?' + 'id=' + x);
+        http.send();
+    }
+
+    function sendValueUndo() {
+        http.open('GET', 'sendValueUndo?' + 'undo=' + 'undo')
+        http.send();
+    }
+
+    function sendValueClear() {
+        http.open('GET', 'sendValueClear?' + 'clear=' + 'clear')
+        http.send();
+    }
+
+
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById('result').innerHTML = this.responseText;
+        }
+    }
+
+</script>
+</html>
